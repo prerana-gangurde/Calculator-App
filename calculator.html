@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stylish Calculator</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #2c3e50, #4ca1af);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* 🔹 Navbar with Gradient */
+    .navbar {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      color: white;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 1.2em;
+    }
+
+    .menu-btn {
+      cursor: pointer;
+      font-size: 22px;
+      background: #605f5f;
+      padding: 8px 14px;
+      border-radius: 8px;
+      transition: 0.3s;
+    }
+
+    .menu-btn:hover {
+      background: #eabb97;
+    }
+
+    /* 🔹 Toggle Menu */
+    .menu {
+      display: none;
+      background: rgba(49, 44, 44, 0.8);
+      width: 100%;
+      text-align: center;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    .menu a {
+      display: block;
+      padding: 12px;
+      text-decoration: none;
+      color: #fff;
+      font-size: 1.1em;
+      transition: 0.3s;
+    }
+
+    .menu a:hover {
+      background: #555;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 🔹 Calculator Box */
+    .calculator {
+      background: #ffffff;
+      padding: 25px;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      width: 320px;
+      margin-top: 30px;
+      animation: slideUp 0.7s ease;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    #display {
+      width: 100%;
+      height: 60px;
+      font-size: 1.6em;
+      margin-bottom: 20px;
+      text-align: right;
+      padding: 10px;
+      border: none;
+      border-radius: 12px;
+      background: #f1f3f6;
+      box-shadow: inset 2px 2px 5px #d1d9e6, inset -2px -2px 5px #fff;
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    button {
+      padding: 18px;
+      font-size: 1.2em;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      background: linear-gradient(145deg, #e6e6e6, #ffffff);
+      box-shadow: 3px 3px 6px #c5c5c5, -3px -3px 6px #ffffff;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      background: linear-gradient(145deg, #dcdcdc, #ffffff);
+    }
+
+    .operator {
+      background: linear-gradient(145deg, #ff9a9e, #fad0c4);
+      color: #333;
+      font-weight: bold;
+    }
+
+    .equal {
+      grid-column: span 2;
+      background: linear-gradient(145deg, #00c6ff, #0072ff);
+      color: white;
+      font-weight: bold;
+    }
+
+    .clear {
+      background: linear-gradient(145deg, #ff4e50, #f9d423);
+      color: white;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🔹 Navbar with Toggle Menu -->
+  <div class="navbar">
+    <div>🧮 Calculator App</div>
+    <div class="menu-btn" id="menuBtn">☰ Menu</div>
+  </div>
+
+  <div class="menu" id="menu">
+    <a href="#">🏠 Home</a>
+    <a href="#">ℹ️ About</a>
+    <a href="#">📞 Contact</a>
+  </div>
+
+  <!-- 🔹 Calculator -->
+  <div class="calculator">
+    <input type="text" id="display" disabled>
+    <div class="buttons">
+      <button class="clear">C</button>
+      <button>/</button>
+      <button>*</button>
+      <button>-</button>
+
+      <button>7</button>
+      <button>8</button>
+      <button>9</button>
+      <button class="operator">+</button>
+
+      <button>4</button>
+      <button>5</button>
+      <button>6</button>
+      <button>( )</button>
+
+      <button>1</button>
+      <button>2</button>
+      <button>3</button>
+      <button>.</button>
+
+      <button>0</button>
+      <button class="equal">=</button>
+    </div>
+  </div>
+
+  <script>
+    // 🔹 Toggle Menu Script
+    const btn = document.getElementById("menuBtn");
+    const menu = document.getElementById("menu");
+
+    btn.addEventListener("click", () => {
+      menu.style.display = menu.style.display === "block" ? "none" : "block";
+    });
+
+    // 🔹 Calculator Script
+    const display = document.getElementById("display");
+    const buttons = document.querySelectorAll(".buttons button, .clear");
+
+    buttons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        if (btn.innerText === "C") {
+          display.value = "";
+        } else if (btn.innerText === "=") {
+          try {
+            display.value = eval(display.value);
+          } catch {
+            display.value = "Error";
+          }
+        } else if (btn.innerText === "( )") {
+          display.value += "()";
+        } else {
+          display.value += btn.innerText;
+        }
+      });
+    });
+  </script>
+</body>
+</html>
